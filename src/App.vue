@@ -2,13 +2,23 @@
   <el-container style="height:100%">
     <el-header class="header">
       <el-row>
-        <el-col :span="12" class="logo">
+        <el-col :span="23" class="logo">
           <i class="el-icon-connection"></i>斌斌粉丝后台管理系统
         </el-col>
-        <el-col :span="12" style="text-align:right">
-          <el-button type="text">注册</el-button>
+        <!-- <el-col :span="12" style="text-align:right">
+          <router-link to="/reg">注册账号</router-link>
           <el-button type="text">登录</el-button>
-        </el-col>
+        </el-col> -->
+        <el-col :span="1" class="userinfo">
+                <el-dropdown trigger="hover">
+                    <span class="el-dropdown-link userinfo-inner" style="color:#fff">amdin</span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>我的消息</el-dropdown-item>
+                        <el-dropdown-item>设置</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </el-col>
       </el-row>
     </el-header>
 
@@ -107,6 +117,14 @@ export default {
     },
     changeMenu(path){
       this.activeIndex = path
+    },
+    logout:function(){
+      this.$confirm("确认退出吗？","提示",{
+        type:"warning"
+      }).then(()=>{
+        // sessionStorage.removeItem("userinfo")
+        this.$router.push("/login")
+      })
     }
   },
   components:{}

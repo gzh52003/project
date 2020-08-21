@@ -21,7 +21,7 @@
       label="地址"
       :formatter="formatter">
     </el-table-column>
-    <el-table-column align="right">
+    <el-table-column align="right" width="200">
         <template v-slot:header slot:scope="scope">
         <el-input
           v-model="search"
