@@ -1,32 +1,20 @@
 <template>
-  <el-container style="height:100%">
-    <el-header class="header">
-      <el-row>
-        <el-col :span="12" class="logo">
-          <i class="el-icon-connection"></i>金锋后台管理系统
-        </el-col>
-        <el-col :span="12" style="text-align:right">
-          <el-button type="text">注册</el-button>
-          <el-button type="text">登录</el-button>
-        </el-col>
-      </el-row>
-    </el-header>
-
-    <el-container>
-      <el-aside width="200px" >
-        <el-menu
+<el-container style="height:100%">
+  <el-aside width="200px" ><el-menu
           style="height:100%"
           :default-active="activeIndex"
           mode="vertical"
-          background-color="#545c64"
+          background-color="#125b70"
           text-color="#fff"
-          active-text-color="#ff0"
+          active-text-color="#303133"
           @select="changeMenu"
           :default-openeds="openMenu"
           router
         >
-          <template v-for="item in menu">
-            <el-menu-item :index="item.path" :key="item.path" v-if="!item.submenu">
+        <div class="box"><img src="./img/pic.png" alt=""></div>
+          
+          <template v-for="item in menu" >
+            <el-menu-item :index="item.path" :key="item.path" v-if="!item.submenu" >
               <i :class="item.icon" style="color:#fff"></i>
               {{item.text}}
             </el-menu-item>
@@ -42,21 +30,26 @@
               >{{sub.text}}</el-menu-item>
             </el-submenu>
           </template>
-        </el-menu>
-      </el-aside>
-      <el-main>
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        </el-menu></el-aside>
+  <el-container>
+    <el-header class="header"><el-row>
+        <el-col :span="12" class="logo">
+          <i class="el-icon-connection"></i>金锋后台管理系统
+        </el-col>
+        <el-col :span="12" style="text-align:right">
+          <el-button type="text">注册</el-button>
+          <el-button type="text">登录</el-button>
+        </el-col>
+      </el-row></el-header>
+    <el-main><el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }" replace>首页</el-breadcrumb-item>
+          
         </el-breadcrumb>
         <div style="padding:15px 0;">
           <router-view />
-        </div>
-      </el-main>
-    </el-container>
+        </div></el-main>
   </el-container>
+</el-container>
 </template>
 
 <script>
@@ -127,13 +120,21 @@ body {
   margin: 0;
   height: 100%;
 }
+.box{
+  text-align: center;
+    margin: 30px 0;
+}
+img{
+  width: 80px;
+    height: 50px;
+}
 .header {
   line-height: 60px;
   color: #fff;
-  background-color: rgba(84, 92, 100, 0.9);
+  background-color: #e1e9ff;
   .logo {
     font-size: 24px;
-    color: #fc0;
+    color: #125b70;
     i {
       font-size: 40px;
       vertical-align: middle;
