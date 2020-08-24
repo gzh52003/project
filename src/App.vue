@@ -45,10 +45,7 @@
       </el-aside>
       <el-main>
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+          <el-breadcrumb-item style="font-size:20px;">首页</el-breadcrumb-item>
         </el-breadcrumb>
         <div style="padding:15px 0;">
           <router-view />
@@ -123,9 +120,6 @@ body,
 html {
   margin: 0;
   height: 100%;
-  background: url(http://www.acbnews.com.au/uploadfile/2017/0928/20170928080853278.jpg)
-    no-repeat;
-  background-size: 100% 100%;
 }
 .header {
   line-height: 60px;
@@ -151,5 +145,8 @@ html {
 }
 .el-menu {
   height: 100%;
+}
+.el-breadcrumb__inner {
+  font-weight: 800 !important;
 }
 </style>
