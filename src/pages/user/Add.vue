@@ -6,21 +6,27 @@
       ref="ruleForm"
       label-width="100px"
       class="demo-ruleForm"
+      method="post"
     >
-      <el-form-item label="用户名" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="ruleForm.username"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pass">
-        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+      <el-form-item label="密码" prop="password">
+        <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-      </el-form-item>
+
       <el-form-item label="年龄" prop="age">
         <el-input v-model.number="ruleForm.age"></el-input>
       </el-form-item>
+      <el-form-item label="性别" prop="gender">
+        <el-select v-model="ruleForm.gender">
+          <el-option label="男" value="男"></el-option>
+          <el-option label="女" value="女"></el-option>
+          <el-option label="保密" value="保密"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+        <el-button type="success" @click="submitForm">保存</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -30,71 +36,63 @@
 export default {
   data() {
     var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("年龄不能为空"));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字值"));
-        } else {
-          if (value < 18) {
-            callback(new Error("必须年满18岁"));
-          } else {
-            callback();
-          }
-        }
-      }, 1000);
-    };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value < 18) {
+        // 如果输入的值不符合规则，则提示信息
+        return callback(new Error("未满18禁止浏览"));
       } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
+        // 规则通过后的回掉
         callback();
       }
     };
     return {
       ruleForm: {
-        name: "",
-        pass: "",
-        checkPass: "",
+        username: "",
+        password: "",
+        gender: "",
         age: "",
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        age: [{ validator: checkAge, trigger: "blur" }],
-        name: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 3, max: 6, message: "长度在 3 到 6 个字符", trigger: "blur" },
+        age: [
+          { required: true, message: "年龄必填", trigger: "change" },
+          { type: "number", message: "只能输入数字", trigger: "change" },
+          // 自定义校验规则
+          {
+            validator: checkAge,
+            trigger: "change",
+          },
+        ],
+        password: [
+          {
+            min: 6,
+            max: 12,
+            message: "密码长度必须在 6 到 12 个字符",
+            trigger: "blur",
+          },
         ],
       },
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    submitForm() {
+      this.$refs["ruleForm"].validate(async (valid) => {
+        console.log(13, valid);
+        // valid为校验结果，全部校验通过是值为true,否则为false
         if (valid) {
-          alert("提交成功");
+          const { ruleForm } = this;
+          const { data } = await this.$request.post("reg", {
+            ...ruleForm,
+          });
+          if (data.code === 1) {
+            this.$message({
+              type: "success",
+              message: "保存",
+            });
+          }
         } else {
-          alert("提交失败");
+          console.log("error submit!!");
           return false;
         }
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     },
   },
 };
