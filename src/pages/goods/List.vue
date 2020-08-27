@@ -8,7 +8,6 @@
       stripe
       border
       highlight-current-row
-      @selection-change="handleSelectionChange"
     >
       <el-table-column type="index" ></el-table-column>
       <el-table-column label="商品名称" prop="name"></el-table-column>
@@ -25,7 +24,7 @@
           <!-- {{JSON.stringify(scope.row)}} -->
           <!-- {{scope.column}} - {{scope.$index}} -->
           <el-button size="small" plain type="success" @click="goto(scope.row._id)">编辑</el-button>
-          <el-button size="small" plain type="danger" @click="deleteUser(scope.row._id)">删除</el-button>
+          <el-button size="small" plain type="danger" @click="deleteGood(scope.row._id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -41,19 +40,24 @@ export default {
     };
   },
   methods: {
-    async deleteUser(id) {
+    async deleteGood(id) {
       this.$confirm("确认删除这条数据吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       }).then(async () => {
-        const { data } = await this.$request.delete("/user/" + id);
+        const { data } = await this.$request.delete("/goods/" + id);
+        console.log(data)
         if (data.code === 1) {
+          let goodslist = await this.$request.get("/goods");
+          console.log(goodslist)
+          this.goodslist = goodslist.data;
+          /* console.log(1)
           this.goodslist = this.goodslist.filter((item) => item._id !== id);
           this.$message({
             type: "success",
             message: "删除成功!",
-          });
+          }); */
         }
       });
     },
@@ -62,7 +66,7 @@ export default {
       // this.$router.push("/user/edit/"+id);
       // this.$router.push("/user/edit/"+id+'?a=10');
       this.$router.push({
-        name:'userEdit',
+        name:'goodEdit',
         params:{id},
         query:{
           a:10,b:20

@@ -1,6 +1,7 @@
 <template>
     <div>
-        Login
+        
+        <router-view/>
     </div>
 </template>
 <script>

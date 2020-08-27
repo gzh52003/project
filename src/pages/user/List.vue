@@ -5,7 +5,6 @@
       :data="userlist"
       tooltip-effect="dark"
       style="width: 100%"
-      @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column type="index" label="#" width="55"></el-table-column>
@@ -81,7 +80,7 @@ export default {
   },
   // 一进来发起请求写在生命周期函数created
   async created() {
-    console.log("List=", this);
+    // console.log("List=", this);
     /* axios({
         url:'http://localhost:2003/api/user',
         method:'get',

@@ -1,10 +1,13 @@
 <template>
     <div>
-        添加用户
+      <UserEdit mode="add"></UserEdit>
     </div>
 </template>
 <script>
+import UserEdit from './components/UserEdit'
 export default {
-    
+    components:{
+        UserEdit
+    }
 }
 </script>
