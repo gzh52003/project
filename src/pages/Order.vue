@@ -2,7 +2,6 @@
   <div>
     <el-table
       :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
-      
       style="width: 100%"
       :default-sort="{prop: 'date', order: 'descending'}"
     >
